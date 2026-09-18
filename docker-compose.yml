@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+  # Postgres
+  db:
+    image: postgres:17-alpine
+    container_name: germanai_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       german_ai
+      POSTGRES_USER:     gauser
+      POSTGRES_PASSWORD: gapassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gauser -d german_ai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Python ML service
+  python-api:
+    build:
+      context: ./python-api
+      dockerfile: Dockerfile
+    container_name: germanai_ml
+    restart: unless-stopped
+    environment:
+      # GermanBERT vocab detection
+      VOCAB_DETECTION_ENABLED: "${VOCAB_DETECTION_ENABLED:-true}"
+      BERT_CONFIDENCE_THRESHOLD: "${BERT_CONFIDENCE_THRESHOLD:-0.05}"
+      # Whisper transcription
+      WHISPER_MODEL: "${WHISPER_MODEL:-base}"
+      # fastText vocab game
+      FASTTEXT_MODEL_PATH: "/app/models/cc.de.300.bin"
+    volumes:
+      - ./python-api/models:/app/models
+    ports:
+      - "127.0.0.1:8001:8001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # .NET backend
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: germanai_api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      python-api:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=german_ai;Username=gauser;Password=gapassword"
+      PythonApi__BaseUrl: "http://python-api:8001"
+      Jwt__Secret: "${JWT_SECRET}"
+      Anthropic__ApiKey: "${ANTHROPIC_API_KEY}"
+      Anthropic__Model: "claude-haiku-4-5-20251001"
+
+  # React frontend
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:5000"
+    container_name: germanai_ui
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:

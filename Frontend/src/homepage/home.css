@@ -1,0 +1,206 @@
+.home-hero {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 40px;
+}
+
+.home-greeting-display {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: var(--text);
+}
+.home-greeting-display em { font-style: normal; color: var(--red); }
+
+.home-greeting-sub {
+    margin-top: 16px;
+    max-width: 480px;
+    font-size: 15px;
+    color: var(--text-mute);
+    line-height: 1.6;
+}
+
+.home-hero-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+
+.home-stamp-card {
+    border: 1px solid var(--rule);
+    padding: 28px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+.home-stamp-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--cefr-a1) 0%,   var(--cefr-a1) 20%,
+        var(--cefr-a2) 20%,  var(--cefr-a2) 40%,
+        var(--cefr-b1) 40%,  var(--cefr-b1) 60%,
+        var(--cefr-b2) 60%,  var(--cefr-b2) 80%,
+        var(--cefr-c1) 80%
+    );
+}
+.home-stamp-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+}
+.home-stamp-body {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.home-stamp-meta { flex: 1; }
+.home-stamp-conf-lbl {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-mute);
+}
+.home-stamp-conf-val {
+    font-family: var(--font-display); font-size: 42px;
+    font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1; color: var(--red); margin-top: 4px;
+}
+.home-stamp-conf-delta {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--green); margin-top: 6px;
+}
+.home-stamp-foot {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule-soft);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-mute);
+}
+.home-stamp-foot strong { color: var(--text); }
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+}
+.qa-card {
+    border: 1px solid var(--rule);
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: all var(--t);
+    position: relative;
+    min-height: 160px;
+    text-align: left;
+    color: var(--text);
+}
+.qa-card:hover { background: var(--text); color: var(--bg); }
+.qa-card:hover .qa-card-num  { color: var(--red); }
+.qa-card:hover .qa-card-hint { color: var(--bg); opacity: 0.7; }
+.qa-card-num {
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--text-mute); letter-spacing: 0.08em;
+}
+.qa-card-title {
+    font-family: var(--font-display); font-size: 22px; font-weight: 500;
+    letter-spacing: -0.02em; line-height: 1.1;
+    margin-top: auto;
+}
+.qa-card-hint { font-size: 12px; color: var(--text-mute); line-height: 1.4; }
+.qa-card-glyph {
+    position: absolute; top: 16px; right: 16px;
+    opacity: 0.8;
+}
+
+.home-insight {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 24px;
+    border-top: 2px solid var(--rule);
+    padding-top: 32px;
+    margin-bottom: 56px;
+}
+.insight-chart-frame {
+    border: 1px solid var(--rule);
+    padding: 20px 24px 16px;
+    position: relative;
+    background: var(--surface);
+}
+.insight-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+}
+.insight-title {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 500;
+}
+.insight-legend {
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 0 8px;
+}
+.legend-row {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+}
+.legend-row:last-child { border-bottom: none; }
+.legend-label { font-size: 12px; color: var(--text-mute); }
+.legend-sub   { font-family: var(--font-mono); font-size: 10px; color: var(--text-mute); letter-spacing: 0.06em; }
+.legend-val   { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--text); }
+
+.feat-index {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    border-top: 2px solid var(--rule);
+    margin-bottom: 56px;
+}
+.feat-row {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: 80px 2fr 3fr 60px;
+    gap: 24px; align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    cursor: pointer;
+    transition: background var(--t);
+}
+.feat-row:hover .feat-name { color: var(--red); }
+.feat-num  { font-family: var(--font-mono); font-size: 11px; color: var(--text-mute); letter-spacing: 0.05em; }
+.feat-name { font-family: var(--font-display); font-size: 20px; font-weight: 500; letter-spacing: -0.01em; transition: color var(--t); }
+.feat-desc { font-size: 13px; color: var(--text-mute); line-height: 1.55; }
+.feat-arrow { font-family: var(--font-mono); font-size: 14px; color: var(--text-mute); text-align: right; }
+
+.home-empty-state {
+    padding: 32px;
+    border: 1px solid var(--rule-soft);
+    background: var(--surface);
+    text-align: center;
+    color: var(--text-mute);
+    margin-bottom: 48px;
+}
+.home-empty-num  { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+.home-empty-text { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 16px; }
+
+@media (max-width: 900px) {
+    .home-hero        { grid-template-columns: 1fr; }
+    .stats-block      { grid-template-columns: 1fr 1fr; }
+    .quick-grid > *   { grid-column: span 6 !important; }
+    .home-insight     { grid-template-columns: 1fr; }
+    .feat-row         { grid-template-columns: 60px 1fr auto; }
+    .feat-desc        { display: none; }
+}
